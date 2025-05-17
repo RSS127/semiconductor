@@ -35,8 +35,24 @@
       color: #007acc;
       font-weight: bold;
     }
+    .mode-btn {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      padding: 10px 15px;
+      font-size: 14px;
+      border: none;
+      border-radius: 5px;
+      background-color: #007acc;
+      color: white;
+      cursor: pointer;
+      z-index: 1000;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
   </style>
 </head>
+<button id="modeToggle" class="mode-btn">🌙 다크모드</button>
 <body>
   <div class="container">
     <div class="main">
@@ -85,6 +101,37 @@
       document.getElementById("termUse").innerText = termData[term].use;
       document.getElementById("termEqn").innerText = termData[term].eqn;
     }
+    // 다크모드 스타일 적용 함수
+    function setDarkMode(enabled) {
+    if (enabled) {
+        document.body.style.backgroundColor = "#121212";
+        document.body.style.color = "#e0e0e0";
+        document.querySelector(".sidebar").style.backgroundColor = "#1e1e1e";
+        document.querySelector(".sidebar").style.borderLeft = "1px solid #333";
+        document.querySelectorAll("li").forEach(li => li.style.color = "#66ccff");
+        document.getElementById("modeToggle").innerText = "☀️ 라이트모드";
+    } else {
+        document.body.style.backgroundColor = "white";
+        document.body.style.color = "black";
+        document.querySelector(".sidebar").style.backgroundColor = "#f5f5f5";
+        document.querySelector(".sidebar").style.borderLeft = "2px solid #ccc";
+        document.querySelectorAll("li").forEach(li => li.style.color = "#007acc");
+        document.getElementById("modeToggle").innerText = "🌙 다크모드";
+    }
+    localStorage.setItem("darkMode", enabled);
+    }
+
+    // 초기 설정
+    document.addEventListener("DOMContentLoaded", () => {
+    const darkMode = localStorage.getItem("darkMode") === "true";
+    setDarkMode(darkMode);
+
+    document.getElementById("modeToggle").addEventListener("click", () => {
+        const current = localStorage.getItem("darkMode") === "true";
+        setDarkMode(!current);
+    });
+    });
+
   </script>
 </body>
 </html>
