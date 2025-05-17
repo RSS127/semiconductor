@@ -141,6 +141,13 @@
         setDarkMode(!current);
       });
     });
+    function showInfo(term) {
+        document.getElementById("termTitle").innerText = `📘 ${term}`;
+        document.getElementById("termEng").innerText = termData[term].eng;
+        document.getElementById("termDesc").innerText = termData[term].desc;
+        document.getElementById("termUse").innerText = termData[term].use;
+        document.getElementById("termEqn").innerText = termData[term].eqn;
+  }
   </script>
     
 
