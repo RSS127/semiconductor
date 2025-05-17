@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>반도체 용어 사전</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      display: flex;
+      min-height: 100vh;
+    }
+    .main {
+      flex-grow: 1;
+      padding: 30px;
+      background: white;
+    }
+    .sidebar {
+      width: 250px;
+      background: #f5f5f5;
+      padding: 20px;
+      border-left: 2px solid #ccc;
+    }
+    .sidebar li {
+      cursor: pointer;
+      margin: 10px 0;
+      color: #007acc;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="main">
+      <h2 id="termTitle">🔍 용어를 선택하세요</h2>
+      <p><strong>영어명:</strong> <span id="termEng"></span></p>
+      <p><strong>설명:</strong> <span id="termDesc"></span></p>
+      <p><strong>사용 용도:</strong> <span id="termUse"></span></p>
+      <p><strong>공식:</strong> <span id="termEqn"></span></p>
+    </div>
+    <div class="sidebar">
+      <h3>📘 용어 목록</h3>
+      <ul>
+        <li onclick="showInfo('MOSFET')">MOSFET</li>
+        <li onclick="showInfo('PN접합')">PN접합</li>
+        <li onclick="showInfo('식각')">식각</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    const termData = {
+      "MOSFET": {
+        eng: "Metal-Oxide Semiconductor Field-Effect Transistor",
+        desc: "전압으로 채널을 제어하는 트랜지스터",
+        use: "디지털 회로, 증폭기",
+        eqn: "Id = μCox(W/L)(Vgs - Vth)²"
+      },
+      "PN접합": {
+        eng: "PN Junction",
+        desc: "P형과 N형 반도체가 만나는 접합부",
+        use: "다이오드, 정류기",
+        eqn: "-"
+      },
+      "식각": {
+        eng: "Etching",
+        desc: "웨이퍼에서 불필요한 부분을 제거하는 공정",
+        use: "리소그래피 이후 회로 형성",
+        eqn: "-"
+      }
+    };
+
+    function showInfo(term) {
+      document.getElementById("termTitle").innerText = `📘 ${term}`;
+      document.getElementById("termEng").innerText = termData[term].eng;
+      document.getElementById("termDesc").innerText = termData[term].desc;
+      document.getElementById("termUse").innerText = termData[term].use;
+      document.getElementById("termEqn").innerText = termData[term].eqn;
+    }
+  </script>
+</body>
+</html>
