@@ -52,7 +52,6 @@
 
   </style>
 </head>
-<button id="modeToggle" class="mode-btn">🌙 다크모드</button>
 <body>
   <div class="container">
     <div class="main">
@@ -92,10 +91,9 @@
         use: "리소그래피 이후 회로 형성",
         eqn: "-"
       }
-    };
-
+    };   
     function setDarkMode(enabled) {
-    if (enabled) {
+      if (enabled) {
         document.body.style.backgroundColor = "#121212";
         document.body.style.color = "#e0e0e0";
         
@@ -112,7 +110,8 @@
 
         // 버튼 텍스트
         document.getElementById("modeToggle").innerText = "☀️ 라이트모드";
-    } else {
+    }
+     else {
         document.body.style.backgroundColor = "white";
         document.body.style.color = "black";
 
@@ -130,11 +129,21 @@
         // 버튼 텍스트
         document.getElementById("modeToggle").innerText = "🌙 다크모드";
     }
-
+    
     localStorage.setItem("darkMode", enabled);
     }
+     document.addEventListener("DOMContentLoaded", () => {
+      const darkMode = localStorage.getItem("darkMode") === "true";
+      setDarkMode(darkMode);
 
-
+      document.getElementById("modeToggle").addEventListener("click", () => {
+        const current = localStorage.getItem("darkMode") === "true";
+        setDarkMode(!current);
+      });
+    });
   </script>
+    
+
+<button id="modeToggle" class="mode-btn">🌙 다크모드</button>
 </body>
 </html>
