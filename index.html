@@ -94,43 +94,46 @@
       }
     };
 
-    function showInfo(term) {
-      document.getElementById("termTitle").innerText = `📘 ${term}`;
-      document.getElementById("termEng").innerText = termData[term].eng;
-      document.getElementById("termDesc").innerText = termData[term].desc;
-      document.getElementById("termUse").innerText = termData[term].use;
-      document.getElementById("termEqn").innerText = termData[term].eqn;
-    }
-    // 다크모드 스타일 적용 함수
     function setDarkMode(enabled) {
     if (enabled) {
         document.body.style.backgroundColor = "#121212";
         document.body.style.color = "#e0e0e0";
+        
+        // sidebar
         document.querySelector(".sidebar").style.backgroundColor = "#1e1e1e";
         document.querySelector(".sidebar").style.borderLeft = "1px solid #333";
+        
+        // main (가운데 영역)
+        document.querySelector(".main").style.backgroundColor = "#1e1e1e";
+        document.querySelector(".main").style.color = "#e0e0e0";
+
+        // li 색상
         document.querySelectorAll("li").forEach(li => li.style.color = "#66ccff");
+
+        // 버튼 텍스트
         document.getElementById("modeToggle").innerText = "☀️ 라이트모드";
     } else {
         document.body.style.backgroundColor = "white";
         document.body.style.color = "black";
+
+        // sidebar
         document.querySelector(".sidebar").style.backgroundColor = "#f5f5f5";
         document.querySelector(".sidebar").style.borderLeft = "2px solid #ccc";
+
+        // main
+        document.querySelector(".main").style.backgroundColor = "white";
+        document.querySelector(".main").style.color = "black";
+
+        // li
         document.querySelectorAll("li").forEach(li => li.style.color = "#007acc");
+
+        // 버튼 텍스트
         document.getElementById("modeToggle").innerText = "🌙 다크모드";
     }
+
     localStorage.setItem("darkMode", enabled);
     }
 
-    // 초기 설정
-    document.addEventListener("DOMContentLoaded", () => {
-    const darkMode = localStorage.getItem("darkMode") === "true";
-    setDarkMode(darkMode);
-
-    document.getElementById("modeToggle").addEventListener("click", () => {
-        const current = localStorage.getItem("darkMode") === "true";
-        setDarkMode(!current);
-    });
-    });
 
   </script>
 </body>
