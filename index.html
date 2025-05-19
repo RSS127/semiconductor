@@ -17,151 +17,6 @@
       flex-grow: 1;
       padding: 30px;
       background: white;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: left;
-    }
-    .sidebar {
-      width: 250px;
-      background: #f5f5f5;
-      padding: 20px;
-      border-left: 2px solid #ccc;
-    }
-    .sidebar li {
-      cursor: pointer;
-      margin: 10px 0;
-      color: #007acc;
-      font-weight: bold;
-    }
-    .mode-btn {
-      position: fixed;
-      bottom: 20px;
-      left: 20px;
-      padding: 10px 15px;
-      font-size: 14px;
-      border: none;
-      border-radius: 5px;
-      background-color: #007acc;
-      color: white;
-      cursor: pointer;
-      z-index: 1000;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-}
-
-  </style>
-</head>
-<body>
-  <div class="container">
-    <div class="main">
-      <h2 id="termTitle">🔍 용어를 선택하세요</h2>
-      <p><strong>영어명:</strong> <span id="termEng"></span></p>
-      <p><strong>설명:</strong> <span id="termDesc"></span></p>
-      <p><strong>사용 용도:</strong> <span id="termUse"></span></p>
-      <p><strong>공식:</strong> <span id="termEqn"></span></p>
-    </div>
-    <div class="sidebar">
-      <h3>📘 용어 목록</h3>
-      <ul>
-        <li onclick="showInfo('MOSFET')">MOSFET</li>
-        <li onclick="showInfo('PN접합')">PN접합</li>
-        <li onclick="showInfo('식각')">식각</li>
-      </ul>
-    </div>
-  </div>
-
-  <script>
-    const termData = {
-      "MOSFET": {
-        eng: "Metal-Oxide Semiconductor Field-Effect Transistor",
-        desc: "전압으로 채널을 제어하는 트랜지스터",
-        use: "디지털 회로, 증폭기",
-        eqn: "Id = μCox(W/L)(Vgs - Vth)²"
-      },
-      "PN접합": {
-        eng: "PN Junction",
-        desc: "P형과 N형 반도체가 만나는 접합부",
-        use: "다이오드, 정류기",
-        eqn: "-"
-      },
-      "식각": {
-        eng: "Etching",
-        desc: "웨이퍼에서 불필요한 부분을 제거하는 공정",
-        use: "리소그래피 이후 회로 형성",
-        eqn: "-"
-      }
-    };   
-    function setDarkMode(enabled) {
-      if (enabled) {
-        document.body.style.backgroundColor = "#121212";
-        document.body.style.color = "#e0e0e0";
-        
-        // sidebar
-        document.querySelector(".sidebar").style.backgroundColor = "#1e1e1e";
-        document.querySelector(".sidebar").style.borderLeft = "1px solid #333";
-        
-        // main (가운데 영역)
-        document.querySelector(".main").style.backgroundColor = "#1e1e1e";
-        document.querySelector(".main").style.color = "#e0e0e0";
-
-        // li 색상
-        document.querySelectorAll("li").forEach(li => li.style.color = "#66ccff");
-
-        // 버튼 텍스트
-        document.getElementById("modeToggle").innerText = "☀️ 라이트모드";
-    }
-     else {
-        document.body.style.backgroundColor = "white";
-        document.body.style.color = "black";
-
-        // sidebar
-        document.querySelector(".sidebar").style.backgroundColor = "#f5f5f5";
-        document.querySelector(".sidebar").style.borderLeft = "2px solid #ccc";
-
-        // main
-        document.querySelector(".main").style.backgroundColor = "white";
-        document.querySelector(".main").style.color = "black";
-
-        // li
-        document.querySelectorAll("li").forEach(li => li.style.color = "#007acc");
-
-        // 버튼 텍스트
-        document.getElementById("modeToggle").innerText = "🌙 다크모드";
-    }
-    
-    localStorage.setItem("darkMode", enabled);
-    }
-     document.addEventListener("DOMContentLoaded", () => {
-      const darkMode = localStorage.getItem("darkMode") === "true";
-      setDarkMode(darkMode);
-
-      document.getElementById("modeToggle").addEventListener("click", () => {
-        const current = localStorage.getItem("darkMode") === "true";
-        setDarkMode(!current);
-      });
-    });
-    function showInfo(term) {
-        document.getElementById("termTitle").innerText = `📘 ${term}`;
-        document.getElementById("termEng").<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <title>반도체 용어 사전</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-    .container {
-      display: flex;
-      min-height: 100vh;
-    }
-    .main {
-      flex-grow: 1;
-      padding: 30px;
-      background: white;
     }
     .sidebar {
       width: 300px;
@@ -215,7 +70,7 @@
     </div>
   </div>
 
-  <button id="modeToggle" class="mode-btn">🌙 다크모드</button>
+  
 
   <script>
     const termData = {
@@ -384,17 +239,7 @@
         sidebar.appendChild(subDiv);
       }
     });
+    <button id="modeToggle" class="mode-btn">🌙 다크모드</button>
   </script>
-</body>
-</html>
-innerText = termData[term].eng;
-        document.getElementById("termDesc").innerText = termData[term].desc;
-        document.getElementById("termUse").innerText = termData[term].use;
-        document.getElementById("termEqn").innerText = termData[term].eqn;
-  }
-  </script>
-    
-
-<button id="modeToggle" class="mode-btn">🌙 다크모드</button>
 </body>
 </html>
