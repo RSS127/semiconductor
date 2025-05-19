@@ -73,7 +73,7 @@
     <label>Vgs: <input type="number" id="vgs" /></label><br/>
     <label>Vth: <input type="number" id="vth" /></label><br/>
     <button onclick="calcMOSFET()">계산</button>
-    <p id="mosfetResult"></p>
+    <p id="mosfetResult">결과가 여기에 표시됩니다.</p>
   </div>
     <div class="main">
       <h2 id="termTitle">🔍 용어를 선택하세요</h2>
@@ -258,6 +258,8 @@
         document.querySelector(".sidebar").style.borderLeft = "1px solid #333";
         document.querySelectorAll(".subterms div").forEach(li => li.style.color = "#66ccff");
         document.getElementById("modeToggle").innerText = "☀️ 라이트모드";
+        document.querySelector(".calculator").style.backgroundColor = "#1e1e1e";
+        document.querySelector(".calculator").style.color = "#e0e0e0";
       } else {
         document.body.style.backgroundColor = "white";
         document.body.style.color = "black";
@@ -267,6 +269,8 @@
         document.querySelector(".sidebar").style.borderLeft = "2px solid #ccc";
         document.querySelectorAll(".subterms div").forEach(li => li.style.color = "#444");
         document.getElementById("modeToggle").innerText = "🌙 다크모드";
+        document.querySelector(".calculator").style.backgroundColor = "#eef2f5";
+        document.querySelector(".calculator").style.color = "black";
       }
       localStorage.setItem("darkMode", enabled);
     }
@@ -306,6 +310,7 @@
 
         sidebar.appendChild(subDiv);
       }
+    });
       function calcMOSFET() {
         const mu = parseFloat(document.getElementById("mu").value);
         const cox = parseFloat(document.getElementById("cox").value);
@@ -317,7 +322,6 @@
         const result = mu * cox * (w / l) * Math.pow((vgs - vth), 2);
         document.getElementById("mosfetResult").innerText = `Id = ${result.toFixed(4)} A`;
       }
-    });
   </script>
 </body>
 </html>
