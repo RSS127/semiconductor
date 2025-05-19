@@ -70,107 +70,67 @@
     </div>
   </div>
 
-  <button id="modeToggle" class="mode-btn">🌙 다크모드</button>
+<button id="modeToggle" class="mode-btn">🌙 다크모드</button>
 
-  <script>
-    const termData = {
-      "반도체 제조 공정": {
-        eng: "Semiconductor Manufacturing Process",
-        desc: "웨이퍼부터 패키징까지 반도체를 만드는 전체 흐름",
-        use: "반도체 생산 전 과정",
-        eqn: "-",
-        subterms: {
-          "웨이퍼 제조": {
-            eng: "Wafer Fabrication",
-            desc: "고순도 단결정 실리콘 인곳을 얇게 절단하여 웨이퍼를 제조함",
-            use: "반도체 공정의 시작",
-            eqn: "-"
-          },
-          "산화": {
-            eng: "Oxidation",
-            desc: "웨이퍼 표면에 산화막(SiO₂)을 형성하여 절연층을 만듦",
-            use: "전기 절연 및 보호막 형성",
-            eqn: "-"
-          },
-          "포토리소그래피": {
-            eng: "Photolithography",
-            desc: "자외선을 이용해 회로 패턴을 웨이퍼에 전사하는 과정",
-            use: "회로 패턴 형성",
-            eqn: "-"
-          },
-          "식각": {
-            eng: "Etching",
-            desc: "노광된 패턴을 기준으로 불필요한 부분을 제거",
-            use: "회로 패턴 완성",
-            eqn: "-"
-          },
-          "이온 주입": {
-            eng: "Ion Implantation",
-            desc: "전기적 특성을 위해 불순물 원소를 웨이퍼에 주입",
-            use: "n형, p형 반도체 형성",
-            eqn: "-"
-          },
-          "증착": {
-            eng: "Deposition",
-            desc: "웨이퍼에 절연층 또는 금속층을 얇게 씌우는 과정",
-            use: "회로 보호층, 배선층 형성",
-            eqn: "-"
-          },
-          "금속 배선": {
-            eng: "Metal Wiring",
-            desc: "회로 층 사이를 금속으로 연결",
-            use: "회로 신호 전달",
-            eqn: "-"
-          },
-          "패키징": {
-            eng: "Packaging",
-            desc: "칩을 자르고 보호용 케이스에 넣는 마지막 단계",
-            use: "외부와 전기적 연결 및 보호",
-            eqn: "-"
-          }
-        }
-      },
-      "디스플레이": {
-        eng: "Display",
-        desc: "영상을 표시하는 장치",
-        use: "스마트폰, TV, 모니터 등",
-        eqn: "-",
-        subterms: {
-          "OLED": {
-            eng: "Organic Light-Emitting Diode",
-            desc: "자체 발광형 디스플레이",
-            use: "고화질 스마트폰, TV",
-            eqn: "-"
-          },
-          "TFT": {
-            eng: "Thin-Film Transistor",
-            desc: "LCD 픽셀을 제어하는 트랜지스터",
-            use: "액정 제어",
-            eqn: "-"
-          }
-        }
-      },
-      "웨이퍼": {
-        eng: "Wafer",
-        desc: "반도체 칩의 기초가 되는 원형 기판",
-        use: "전 공정에서 기초 재료로 사용",
-        eqn: "-",
-        subterms: {
-          "CMP": {
-            eng: "Chemical Mechanical Polishing",
-            desc: "웨이퍼 표면을 평탄화하는 공정",
-            use: "회로 형성 전 평탄화",
-            eqn: "-"
-          },
-          "식각": {
-            eng: "Etching",
-            desc: "불필요한 층을 제거하는 공정",
-            use: "패턴 형성",
-            eqn: "-"
-          }
+<script>
+  const termData = {
+    "반도체 제조 공정": {
+      eng: "Semiconductor Manufacturing Process",
+      desc: "웨이퍼부터 패키징까지 반도체를 만드는 전체 흐름",
+      use: "반도체 생산 전 과정",
+      eqn: "-",
+      subterms: {
+        "웨이퍼 제조": {
+          eng: "Wafer Fabrication",
+          desc: "고순도 단결정 실리콘 인곳을 얇게 절단하여 웨이퍼를 제조함",
+          use: "반도체 공정의 시작",
+          eqn: "-"
+        },
+        "산화": {
+          eng: "Oxidation",
+          desc: "웨이퍼 표면에 산화막(SiO₂)을 형성하여 절연층을 만듦",
+          use: "전기 절연 및 보호막 형성",
+          eqn: "-"
+        },
+        "포토리소그래피": {
+          eng: "Photolithography",
+          desc: "자외선을 이용해 회로 패턴을 웨이퍼에 전사하는 과정",
+          use: "회로 패턴 형성",
+          eqn: "-"
+        },
+        "식각": {
+          eng: "Etching",
+          desc: "노광된 패턴을 기준으로 불필요한 부분을 제거",
+          use: "회로 패턴 완성",
+          eqn: "-"
+        },
+        "이온 주입": {
+          eng: "Ion Implantation",
+          desc: "전기적 특성을 위해 불순물 원소를 웨이퍼에 주입",
+          use: "n형, p형 반도체 형성",
+          eqn: "-"
+        },
+        "증착": {
+          eng: "Deposition",
+          desc: "웨이퍼에 절연층 또는 금속층을 얇게 씌우는 과정",
+          use: "회로 보호층, 배선층 형성",
+          eqn: "-"
+        },
+        "금속 배선": {
+          eng: "Metal Wiring",
+          desc: "회로 층 사이를 금속으로 연결",
+          use: "회로 신호 전달",
+          eqn: "-"
+        },
+        "패키징": {
+          eng: "Packaging",
+          desc: "칩을 자르고 보호용 케이스에 넣는 마지막 단계",
+          use: "외부와 전기적 연결 및 보호",
+          eqn: "-"
         }
       }
-    };
+    }
+  };
 
     function showInfo(termObj, termName) {
       document.getElementById("termTitle").innerText = `📘 ${termName}`;
