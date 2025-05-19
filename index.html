@@ -143,7 +143,251 @@
     });
     function showInfo(term) {
         document.getElementById("termTitle").innerText = `📘 ${term}`;
-        document.getElementById("termEng").innerText = termData[term].eng;
+        document.getElementById("termEng").<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>반도체 용어 사전</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      display: flex;
+      min-height: 100vh;
+    }
+    .main {
+      flex-grow: 1;
+      padding: 30px;
+      background: white;
+    }
+    .sidebar {
+      width: 300px;
+      background: #f5f5f5;
+      padding: 20px;
+      border-left: 2px solid #ccc;
+    }
+    .category {
+      cursor: pointer;
+      font-weight: bold;
+      color: #007acc;
+      margin-top: 10px;
+    }
+    .subterms {
+      display: none;
+      margin-left: 15px;
+      margin-bottom: 10px;
+    }
+    .subterms div {
+      cursor: pointer;
+      color: #444;
+      margin: 5px 0;
+    }
+    .mode-btn {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      padding: 10px 15px;
+      font-size: 14px;
+      border: none;
+      border-radius: 5px;
+      background-color: #007acc;
+      color: white;
+      cursor: pointer;
+      z-index: 1000;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="main">
+      <h2 id="termTitle">🔍 용어를 선택하세요</h2>
+      <p><strong>영어명:</strong> <span id="termEng"></span></p>
+      <p><strong>설명:</strong> <span id="termDesc"></span></p>
+      <p><strong>사용 용도:</strong> <span id="termUse"></span></p>
+      <p><strong>공식:</strong> <span id="termEqn"></span></p>
+    </div>
+    <div class="sidebar" id="sidebar">
+      <!-- 카테고리와 용어 목록은 JS로 추가됨 -->
+    </div>
+  </div>
+
+  <button id="modeToggle" class="mode-btn">🌙 다크모드</button>
+
+  <script>
+    const termData = {
+      "반도체 제조 공정": {
+        eng: "Semiconductor Manufacturing Process",
+        desc: "웨이퍼부터 패키징까지 반도체를 만드는 전체 흐름",
+        use: "반도체 생산 전 과정",
+        eqn: "-",
+        subterms: {
+          "웨이퍼 제조": {
+            eng: "Wafer Fabrication",
+            desc: "고순도 단결정 실리콘 인곳을 얇게 절단하여 웨이퍼를 제조함",
+            use: "반도체 공정의 시작",
+            eqn: "-"
+          },
+          "산화": {
+            eng: "Oxidation",
+            desc: "웨이퍼 표면에 산화막(SiO₂)을 형성하여 절연층을 만듦",
+            use: "전기 절연 및 보호막 형성",
+            eqn: "-"
+          },
+          "포토리소그래피": {
+            eng: "Photolithography",
+            desc: "자외선을 이용해 회로 패턴을 웨이퍼에 전사하는 과정",
+            use: "회로 패턴 형성",
+            eqn: "-"
+          },
+          "식각": {
+            eng: "Etching",
+            desc: "노광된 패턴을 기준으로 불필요한 부분을 제거",
+            use: "회로 패턴 완성",
+            eqn: "-"
+          },
+          "이온 주입": {
+            eng: "Ion Implantation",
+            desc: "전기적 특성을 위해 불순물 원소를 웨이퍼에 주입",
+            use: "n형, p형 반도체 형성",
+            eqn: "-"
+          },
+          "증착": {
+            eng: "Deposition",
+            desc: "웨이퍼에 절연층 또는 금속층을 얇게 씌우는 과정",
+            use: "회로 보호층, 배선층 형성",
+            eqn: "-"
+          },
+          "금속 배선": {
+            eng: "Metal Wiring",
+            desc: "회로 층 사이를 금속으로 연결",
+            use: "회로 신호 전달",
+            eqn: "-"
+          },
+          "패키징": {
+            eng: "Packaging",
+            desc: "칩을 자르고 보호용 케이스에 넣는 마지막 단계",
+            use: "외부와 전기적 연결 및 보호",
+            eqn: "-"
+          }
+        }
+      },
+      "디스플레이": {
+        eng: "Display",
+        desc: "영상을 표시하는 장치",
+        use: "스마트폰, TV, 모니터 등",
+        eqn: "-",
+        subterms: {
+          "OLED": {
+            eng: "Organic Light-Emitting Diode",
+            desc: "자체 발광형 디스플레이",
+            use: "고화질 스마트폰, TV",
+            eqn: "-"
+          },
+          "TFT": {
+            eng: "Thin-Film Transistor",
+            desc: "LCD 픽셀을 제어하는 트랜지스터",
+            use: "액정 제어",
+            eqn: "-"
+          }
+        }
+      },
+      "웨이퍼": {
+        eng: "Wafer",
+        desc: "반도체 칩의 기초가 되는 원형 기판",
+        use: "전 공정에서 기초 재료로 사용",
+        eqn: "-",
+        subterms: {
+          "CMP": {
+            eng: "Chemical Mechanical Polishing",
+            desc: "웨이퍼 표면을 평탄화하는 공정",
+            use: "회로 형성 전 평탄화",
+            eqn: "-"
+          },
+          "식각": {
+            eng: "Etching",
+            desc: "불필요한 층을 제거하는 공정",
+            use: "패턴 형성",
+            eqn: "-"
+          }
+        }
+      }
+    };
+
+    function showInfo(termObj, termName) {
+      document.getElementById("termTitle").innerText = `📘 ${termName}`;
+      document.getElementById("termEng").innerText = termObj.eng;
+      document.getElementById("termDesc").innerText = termObj.desc;
+      document.getElementById("termUse").innerText = termObj.use;
+      document.getElementById("termEqn").innerText = termObj.eqn;
+    }
+
+    function setDarkMode(enabled) {
+      if (enabled) {
+        document.body.style.backgroundColor = "#121212";
+        document.body.style.color = "#e0e0e0";
+        document.querySelector(".main").style.backgroundColor = "#1e1e1e";
+        document.querySelector(".main").style.color = "#e0e0e0";
+        document.querySelector(".sidebar").style.backgroundColor = "#1e1e1e";
+        document.querySelector(".sidebar").style.borderLeft = "1px solid #333";
+        document.querySelectorAll(".subterms div").forEach(li => li.style.color = "#66ccff");
+        document.getElementById("modeToggle").innerText = "☀️ 라이트모드";
+      } else {
+        document.body.style.backgroundColor = "white";
+        document.body.style.color = "black";
+        document.querySelector(".main").style.backgroundColor = "white";
+        document.querySelector(".main").style.color = "black";
+        document.querySelector(".sidebar").style.backgroundColor = "#f5f5f5";
+        document.querySelector(".sidebar").style.borderLeft = "2px solid #ccc";
+        document.querySelectorAll(".subterms div").forEach(li => li.style.color = "#444");
+        document.getElementById("modeToggle").innerText = "🌙 다크모드";
+      }
+      localStorage.setItem("darkMode", enabled);
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const darkMode = localStorage.getItem("darkMode") === "true";
+      setDarkMode(darkMode);
+      document.getElementById("modeToggle").addEventListener("click", () => {
+        const current = localStorage.getItem("darkMode") === "true";
+        setDarkMode(!current);
+      });
+
+      const sidebar = document.getElementById("sidebar");
+      for (const [category, data] of Object.entries(termData)) {
+        const catDiv = document.createElement("div");
+        catDiv.className = "category";
+        catDiv.innerText = category;
+        sidebar.appendChild(catDiv);
+
+        const subDiv = document.createElement("div");
+        subDiv.className = "subterms";
+
+        catDiv.addEventListener("click", () => {
+          showInfo(data, category);
+          subDiv.style.display = subDiv.style.display === "none" ? "block" : "none";
+        });
+
+        for (const [sub, subInfo] of Object.entries(data.subterms || {})) {
+          const subEl = document.createElement("div");
+          subEl.innerText = sub;
+          subEl.addEventListener("click", (e) => {
+            e.stopPropagation();
+            showInfo(subInfo, sub);
+          });
+          subDiv.appendChild(subEl);
+        }
+
+        sidebar.appendChild(subDiv);
+      }
+    });
+  </script>
+</body>
+</html>
+innerText = termData[term].eng;
         document.getElementById("termDesc").innerText = termData[term].desc;
         document.getElementById("termUse").innerText = termData[term].use;
         document.getElementById("termEqn").innerText = termData[term].eqn;
