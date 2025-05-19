@@ -13,6 +13,12 @@
       display: flex;
       min-height: 100vh;
     }
+    .calculator {
+      width: 300px;
+      padding: 20px;
+      background: #eef2f5;
+      border-right: 2px solid #ccc;
+}
     .main {
       flex-grow: 1;
       padding: 30px;
@@ -58,6 +64,17 @@
 </head>
 <body>
   <div class="container">
+     <div class="calculator">
+    <h3>🧮 MOSFET 전류 계산기</h3>
+    <label>μ: <input type="number" id="mu" /></label><br/>
+    <label>Cox: <input type="number" id="cox" /></label><br/>
+    <label>W: <input type="number" id="w" /></label><br/>
+    <label>L: <input type="number" id="l" /></label><br/>
+    <label>Vgs: <input type="number" id="vgs" /></label><br/>
+    <label>Vth: <input type="number" id="vth" /></label><br/>
+    <button onclick="calcMOSFET()">계산</button>
+    <p id="mosfetResult"></p>
+  </div>
     <div class="main">
       <h2 id="termTitle">🔍 용어를 선택하세요</h2>
       <p><strong>영어명:</strong> <span id="termEng"></span></p>
@@ -288,6 +305,17 @@
         }
 
         sidebar.appendChild(subDiv);
+      }
+      function calcMOSFET() {
+        const mu = parseFloat(document.getElementById("mu").value);
+        const cox = parseFloat(document.getElementById("cox").value);
+        const w = parseFloat(document.getElementById("w").value);
+        const l = parseFloat(document.getElementById("l").value);
+        const vgs = parseFloat(document.getElementById("vgs").value);
+        const vth = parseFloat(document.getElementById("vth").value);
+
+        const result = mu * cox * (w / l) * Math.pow((vgs - vth), 2);
+        document.getElementById("mosfetResult").innerText = `Id = ${result.toFixed(4)} A`;
       }
     });
   </script>
