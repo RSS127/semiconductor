@@ -17,28 +17,23 @@
       flex-grow: 1;
       padding: 30px;
       background: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: left;
     }
     .sidebar {
-      width: 300px;
+      width: 250px;
       background: #f5f5f5;
       padding: 20px;
       border-left: 2px solid #ccc;
     }
-    .category {
+    .sidebar li {
       cursor: pointer;
-      font-weight: bold;
+      margin: 10px 0;
       color: #007acc;
-      margin-top: 10px;
-    }
-    .subterms {
-      display: none;
-      margin-left: 15px;
-      margin-bottom: 10px;
-    }
-    .subterms div {
-      cursor: pointer;
-      color: #444;
-      margin: 5px 0;
+      font-weight: bold;
     }
     .mode-btn {
       position: fixed;
@@ -53,7 +48,8 @@
       cursor: pointer;
       z-index: 1000;
       box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-    }
+}
+
   </style>
 </head>
 <body>
@@ -65,124 +61,96 @@
       <p><strong>사용 용도:</strong> <span id="termUse"></span></p>
       <p><strong>공식:</strong> <span id="termEqn"></span></p>
     </div>
-    <div class="sidebar" id="sidebar">
-      <!-- 카테고리와 용어 목록은 JS로 추가됨 -->
+    <div class="sidebar">
+      <h3>📘 용어 목록</h3>
+      <ul>
+        <li onclick="showInfo('MOSFET')">MOSFET</li>
+        <li onclick="showInfo('PN접합')">PN접합</li>
+        <li onclick="showInfo('식각')">식각</li>
+      </ul>
     </div>
   </div>
 
-  <button id="modeToggle" class="mode-btn">🌙 다크모드</button>
-
   <script>
     const termData = {
-      "디스플레이": {
-        eng: "Display",
-        desc: "영상을 표시하는 장치",
-        use: "스마트폰, TV, 모니터 등",
-        eqn: "-",
-        subterms: {
-          "OLED": {
-            eng: "Organic Light-Emitting Diode",
-            desc: "자체 발광형 디스플레이",
-            use: "고화질 스마트폰, TV",
-            eqn: "-"
-          },
-          "TFT": {
-            eng: "Thin-Film Transistor",
-            desc: "LCD 픽셀을 제어하는 트랜지스터",
-            use: "액정 제어",
-            eqn: "-"
-          }
-        }
+      "MOSFET": {
+        eng: "Metal-Oxide Semiconductor Field-Effect Transistor",
+        desc: "전압으로 채널을 제어하는 트랜지스터",
+        use: "디지털 회로, 증폭기",
+        eqn: "Id = μCox(W/L)(Vgs - Vth)²"
       },
-      "웨이퍼": {
-        eng: "Wafer",
-        desc: "반도체 칩의 기초가 되는 원형 기판",
-        use: "전 공정에서 기초 재료로 사용",
-        eqn: "-",
-        subterms: {
-          "CMP": {
-            eng: "Chemical Mechanical Polishing",
-            desc: "웨이퍼 표면을 평탄화하는 공정",
-            use: "회로 형성 전 평탄화",
-            eqn: "-"
-          },
-          "식각": {
-            eng: "Etching",
-            desc: "불필요한 층을 제거하는 공정",
-            use: "패턴 형성",
-            eqn: "-"
-          }
-        }
+      "PN접합": {
+        eng: "PN Junction",
+        desc: "P형과 N형 반도체가 만나는 접합부",
+        use: "다이오드, 정류기",
+        eqn: "-"
+      },
+      "식각": {
+        eng: "Etching",
+        desc: "웨이퍼에서 불필요한 부분을 제거하는 공정",
+        use: "리소그래피 이후 회로 형성",
+        eqn: "-"
       }
-    };
-
-    function showInfo(termObj, termName) {
-      document.getElementById("termTitle").innerText = `📘 ${termName}`;
-      document.getElementById("termEng").innerText = termObj.eng;
-      document.getElementById("termDesc").innerText = termObj.desc;
-      document.getElementById("termUse").innerText = termObj.use;
-      document.getElementById("termEqn").innerText = termObj.eqn;
-    }
-
+    };   
     function setDarkMode(enabled) {
       if (enabled) {
         document.body.style.backgroundColor = "#121212";
         document.body.style.color = "#e0e0e0";
-        document.querySelector(".main").style.backgroundColor = "#1e1e1e";
-        document.querySelector(".main").style.color = "#e0e0e0";
+        
+        // sidebar
         document.querySelector(".sidebar").style.backgroundColor = "#1e1e1e";
         document.querySelector(".sidebar").style.borderLeft = "1px solid #333";
-        document.querySelectorAll(".subterms div").forEach(li => li.style.color = "#66ccff");
+        
+        // main (가운데 영역)
+        document.querySelector(".main").style.backgroundColor = "#1e1e1e";
+        document.querySelector(".main").style.color = "#e0e0e0";
+
+        // li 색상
+        document.querySelectorAll("li").forEach(li => li.style.color = "#66ccff");
+
+        // 버튼 텍스트
         document.getElementById("modeToggle").innerText = "☀️ 라이트모드";
-      } else {
+    }
+     else {
         document.body.style.backgroundColor = "white";
         document.body.style.color = "black";
-        document.querySelector(".main").style.backgroundColor = "white";
-        document.querySelector(".main").style.color = "black";
+
+        // sidebar
         document.querySelector(".sidebar").style.backgroundColor = "#f5f5f5";
         document.querySelector(".sidebar").style.borderLeft = "2px solid #ccc";
-        document.querySelectorAll(".subterms div").forEach(li => li.style.color = "#444");
-        document.getElementById("modeToggle").innerText = "🌙 다크모드";
-      }
-      localStorage.setItem("darkMode", enabled);
-    }
 
-    document.addEventListener("DOMContentLoaded", () => {
+        // main
+        document.querySelector(".main").style.backgroundColor = "white";
+        document.querySelector(".main").style.color = "black";
+
+        // li
+        document.querySelectorAll("li").forEach(li => li.style.color = "#007acc");
+
+        // 버튼 텍스트
+        document.getElementById("modeToggle").innerText = "🌙 다크모드";
+    }
+    
+    localStorage.setItem("darkMode", enabled);
+    }
+     document.addEventListener("DOMContentLoaded", () => {
       const darkMode = localStorage.getItem("darkMode") === "true";
       setDarkMode(darkMode);
+
       document.getElementById("modeToggle").addEventListener("click", () => {
         const current = localStorage.getItem("darkMode") === "true";
         setDarkMode(!current);
       });
-
-      const sidebar = document.getElementById("sidebar");
-      for (const [category, data] of Object.entries(termData)) {
-        const catDiv = document.createElement("div");
-        catDiv.className = "category";
-        catDiv.innerText = category;
-        sidebar.appendChild(catDiv);
-
-        const subDiv = document.createElement("div");
-        subDiv.className = "subterms";
-
-        catDiv.addEventListener("click", () => {
-          showInfo(data, category);
-          subDiv.style.display = subDiv.style.display === "none" ? "block" : "none";
-        });
-
-        for (const [sub, subInfo] of Object.entries(data.subterms || {})) {
-          const subEl = document.createElement("div");
-          subEl.innerText = sub;
-          subEl.addEventListener("click", (e) => {
-            e.stopPropagation();
-            showInfo(subInfo, sub);
-          });
-          subDiv.appendChild(subEl);
-        }
-
-        sidebar.appendChild(subDiv);
-      }
     });
+    function showInfo(term) {
+        document.getElementById("termTitle").innerText = `📘 ${term}`;
+        document.getElementById("termEng").innerText = termData[term].eng;
+        document.getElementById("termDesc").innerText = termData[term].desc;
+        document.getElementById("termUse").innerText = termData[term].use;
+        document.getElementById("termEqn").innerText = termData[term].eqn;
+  }
   </script>
+    
+
+<button id="modeToggle" class="mode-btn">🌙 다크모드</button>
 </body>
 </html>
