@@ -63,17 +63,60 @@
   </style>
 </head>
 <body>
-  <div class="container">
-     <div class="calculator">
-    <h3>🧮 MOSFET 전류 계산기</h3>
-    <label>μ: <input type="number" id="mu" /></label><br/>
-    <label>Cox: <input type="number" id="cox" /></label><br/>
-    <label>W: <input type="number" id="w" /></label><br/>
-    <label>L: <input type="number" id="l" /></label><br/>
-    <label>Vgs: <input type="number" id="vgs" /></label><br/>
-    <label>Vth: <input type="number" id="vth" /></label><br/>
-    <button onclick="calcMOSFET()">계산</button>
-    <p id="mosfetResult">결과가 여기에 표시됩니다.</p>
+  <div class="calculator">
+    <div class="category" onclick="toggleCalcMenu()">🧮 계산기 목록 ▼</div>
+    <div class="subterms" id="calcList">
+      <div onclick="showCalc('mosfet')">MOSFET 전류 계산기</div>
+      <div onclick="showCalc('etch')">식각 깊이 계산기</div>
+      <div onclick="showCalc('deposition')">증착 두께 계산기</div>
+      <div onclick="showCalc('yield')">수율 계산기</div>
+      <div onclick="showCalc('power')">전력 소비 계산기</div>
+    </div>
+
+    <!-- 계산기 UI들 -->
+    <div class="calc-ui" id="mosfetCalc">
+      <h4>MOSFET 전류 계산기</h4>
+      <label>μ: <input type="number" id="mu" /></label><br/>
+      <label>Cox: <input type="number" id="cox" /></label><br/>
+      <label>W: <input type="number" id="w" /></label><br/>
+      <label>L: <input type="number" id="l" /></label><br/>
+      <label>Vgs: <input type="number" id="vgs" /></label><br/>
+      <label>Vth: <input type="number" id="vth" /></label><br/>
+      <button onclick="calcMOSFET()">계산</button>
+      <p id="mosfetResult"></p>
+    </div>
+
+    <div class="calc-ui" id="etchCalc" style="display:none;">
+      <h4>식각 깊이 계산기</h4>
+      <label>속도 (nm/min): <input type="number" id="etchRate" /></label><br/>
+      <label>시간 (min): <input type="number" id="etchTime" /></label><br/>
+      <button onclick="calcEtch()">계산</button>
+      <p id="etchResult"></p>
+    </div>
+
+    <div class="calc-ui" id="depositionCalc" style="display:none;">
+      <h4>증착 두께 계산기</h4>
+      <label>속도 (nm/min): <input type="number" id="depRate" /></label><br/>
+      <label>시간 (min): <input type="number" id="depTime" /></label><br/>
+      <button onclick="calcDeposition()">계산</button>
+      <p id="depResult"></p>
+    </div>
+
+    <div class="calc-ui" id="yieldCalc" style="display:none;">
+      <h4>수율 계산기</h4>
+      <label>양품 수량: <input type="number" id="good" /></label><br/>
+      <label>총 생산 수량: <input type="number" id="total" /></label><br/>
+      <button onclick="calcYield()">계산</button>
+      <p id="yieldResult"></p>
+    </div>
+
+    <div class="calc-ui" id="powerCalc" style="display:none;">
+      <h4>전력 소비 계산기</h4>
+      <label>전압 V: <input type="number" id="volt" /></label><br/>
+      <label>전류 I: <input type="number" id="amp" /></label><br/>
+      <button onclick="calcPower()">계산</button>
+      <p id="powerResult"></p>
+    </div>
   </div>
     <div class="main">
       <h2 id="termTitle">🔍 용어를 선택하세요</h2>
@@ -260,6 +303,10 @@
         document.getElementById("modeToggle").innerText = "☀️ 라이트모드";
         document.querySelector(".calculator").style.backgroundColor = "#1e1e1e";
         document.querySelector(".calculator").style.color = "#e0e0e0";
+        document.querySelectorAll(".calc-ui").forEach(div => {
+        div.style.backgroundColor = "#1e1e1e";
+        div.style.color = "#e0e0e0";
+      });
       } else {
         document.body.style.backgroundColor = "white";
         document.body.style.color = "black";
@@ -271,6 +318,10 @@
         document.getElementById("modeToggle").innerText = "🌙 다크모드";
         document.querySelector(".calculator").style.backgroundColor = "#eef2f5";
         document.querySelector(".calculator").style.color = "black";
+        document.querySelectorAll(".calc-ui").forEach(div => {
+        div.style.backgroundColor = "#eef2f5";
+        div.style.color = "black";
+      });
       }
       localStorage.setItem("darkMode", enabled);
     }
@@ -321,6 +372,41 @@
 
         const result = mu * cox * (w / l) * Math.pow((vgs - vth), 2);
         document.getElementById("mosfetResult").innerText = `Id = ${result.toFixed(4)} A`;
+      }
+      function toggleCalcMenu() {
+        const list = document.getElementById("calcList");
+        list.style.display = list.style.display === "none" ? "block" : "none";
+      }
+
+      function showCalc(type) {
+        document.querySelectorAll('.calc-ui').forEach(div => div.style.display = 'none');
+        document.getElementById(`${type}Calc`).style.display = 'block';
+      }
+      function calcEtch() {
+        const rate = parseFloat(document.getElementById("etchRate").value);
+        const time = parseFloat(document.getElementById("etchTime").value);
+        const depth = rate * time;
+        document.getElementById("etchResult").innerText = `식각 깊이: ${depth.toFixed(2)} nm`;
+      }
+      function calcDeposition() {
+        const rate = parseFloat(document.getElementById("depRate").value);
+        const time = parseFloat(document.getElementById("depTime").value);
+        const thickness = rate * time;
+        document.getElementById("depResult").innerText = `증착 두께: ${thickness.toFixed(2)} nm`;
+      }
+
+      function calcYield() {
+        const good = parseFloat(document.getElementById("good").value);
+        const total = parseFloat(document.getElementById("total").value);
+        const yieldRate = (good / total) * 100;
+        document.getElementById("yieldResult").innerText = `수율: ${yieldRate.toFixed(2)} %`;
+      }
+
+      function calcPower() {
+        const v = parseFloat(document.getElementById("volt").value);
+        const i = parseFloat(document.getElementById("amp").value);
+        const power = v * i;
+        document.getElementById("powerResult").innerText = `전력: ${power.toFixed(2)} W`;
       }
   </script>
 </body>
