@@ -18,17 +18,26 @@
       padding: 20px;
       background: #eef2f5;
       border-right: 2px solid #ccc;
-}
+      box-sizing: border-box;
+      order: 1; /* 왼쪽 */
+    }
     .main {
       flex-grow: 1;
       padding: 30px;
       background: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      order: 2; /* 가운데 */
     }
     .sidebar {
       width: 300px;
       background: #f5f5f5;
       padding: 20px;
       border-left: 2px solid #ccc;
+      box-sizing: border-box;
+      order: 3; /* 오른쪽 */
     }
     .category {
       cursor: pointer;
