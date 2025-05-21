@@ -11,8 +11,11 @@
     }
     .container {
       display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-start;
       min-height: 100vh;
-       width: 100%;
+      width: 100%;
     }
     .calculator {
       width: 300px;
@@ -24,6 +27,7 @@
     }
     .main {
       flex-grow: 1;
+      min-width: 0;
       padding: 30px;
       background: white;
       display: flex;
@@ -73,17 +77,19 @@
   </style>
 </head>
 <body>
+  <div class="container">
+    
+    <!-- 계산기: 왼쪽 -->
   <div class="calculator">
-    <div class="category" onclick="toggleCalcMenu()">🧮 계산기 목록 ▼</div>
-    <div class="subterms" id="calcList">
+     <div class="category" onclick="toggleCalcMenu()">🧮 계산기 목록 ▼</div>
+      <div class="subterms" id="calcList">
       <div onclick="showCalc('mosfet')">MOSFET 전류 계산기</div>
       <div onclick="showCalc('etch')">식각 깊이 계산기</div>
       <div onclick="showCalc('deposition')">증착 두께 계산기</div>
       <div onclick="showCalc('yield')">수율 계산기</div>
       <div onclick="showCalc('power')">전력 소비 계산기</div>
     </div>
-
-    <!-- 계산기 UI들 -->
+   <!-- 계산기 UI들 -->
     <div class="calc-ui" id="mosfetCalc">
       <h4>MOSFET 전류 계산기</h4>
       <label>μ: <input type="number" id="mu" /></label><br/>
@@ -128,6 +134,8 @@
       <p id="powerResult"></p>
     </div>
   </div>
+
+    <!-- 용어 설명: 가운데 -->
     <div class="main">
       <h2 id="termTitle">🔍 용어를 선택하세요</h2>
       <p><strong>영어명:</strong> <span id="termEng"></span></p>
@@ -135,12 +143,14 @@
       <p><strong>사용 용도:</strong> <span id="termUse"></span></p>
       <p><strong>공식:</strong> <span id="termEqn"></span></p>
     </div>
+
+    <!-- 용어 목록: 오른쪽 -->
     <div class="sidebar" id="sidebar">
       <!-- 카테고리와 용어 목록은 JS로 추가됨 -->
     </div>
-  </div>
-
-<button id="modeToggle" class="mode-btn">🌙 다크모드</button>
+  </div> <!-- ✅ container 닫는 위치 중요 -->
+  <button id="modeToggle" class="mode-btn">🌙 다크모드</button>
+</body>
 
 <script>
   const termData = {
