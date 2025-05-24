@@ -1,0 +1,37 @@
+from google. colab import files
+uplloaded = files.upload()
+
+import openpyxl
+
+wb = openpyxl.load_workbook('weight_heigiht.xlsx')
+ws =wb["sheet1"]
+x = []
+y = []
+
+max_row = ws.max_row
+for i in range(2, max_row + 1):
+    weight = ws.cell(row=i, column=3).value
+    height = ws.cell(row=i, column=2).value
+
+    x.append(weight)
+    y.append(height)
+print(x)
+
+iteration = 100
+w_n = 0.005
+a = 0.0001
+m = len(x)
+
+for k in range(1, iteration + 1):
+    sigma = 0
+    for i in range(m):
+        sigma += (w_n * x[i] - y[i])**2
+        loss = sigma / m
+
+    sigma = 0 
+    for j in range(m):
+        sigma += (w_n*x[j]-y[j])*x[j]
+        loss_m = sigma*2/m
+        w_n1 = w_n - (a*loss_m)
+        print("iteration:",k,"loss:",loss,"가중치:",w_n1)
+        w_n = w_n1
