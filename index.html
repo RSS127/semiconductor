@@ -87,6 +87,7 @@
       <div onclick="showCalc('deposition')">증착 두께 계산기</div>
       <div onclick="showCalc('yield')">수율 계산기</div>
       <div onclick="showCalc('power')">전력 소비 계산기</div>
+      <div onclick="showCalc('cmp')">CMP 제거율 계산기</div>
     </div>
    <!-- 계산기 UI들 -->
     <div class="calc-ui" id="mosfetCalc">
@@ -132,6 +133,15 @@
       <button onclick="calcPower()">계산</button>
       <p id="powerResult"></p>
     </div>
+
+    <div class="calc-ui" id="cmpCalc" style="display:none;">
+      <h4>CMP 제거율 계산기</h4>
+      <label>초기 두께 T₀ (nm): <input type="number" id="cmpStart" /></label><br/>
+      <label>최종 두께 T (nm): <input type="number" id="cmpEnd" /></label><br/>
+      <label>연마 시간 t (min): <input type="number" id="cmpTime" /></label><br/>
+      <button onclick="calcCMP()">계산</button>
+      <p id="cmpResult"></p>
+    </div>
   </div>
 
     <!-- 용어 설명: 가운데 -->
@@ -153,26 +163,6 @@
 
 <script>
   const termData = {
-  "웨이퍼 제조": {
-    eng: "Wafer Fabrication",
-    desc: "고순도 단결정 실리콘 인곳을 얇게 절단하여 웨이퍼를 만듭니다.",
-    use: "반도체 공정의 출발점이 되는 재료 준비",
-    eqn: "-",
-    subterms: {
-      "인곳": {
-        eng: "Ingot",
-        desc: "실리콘을 결정화시켜 만든 원기둥 형태의 덩어리",
-        use: "웨이퍼 절단 전 실리콘 원료 형태",
-        eqn: "-"
-      },
-      "다이싱": {
-        eng: "Dicing",
-        desc: "웨이퍼를 개별 칩으로 자르는 공정",
-        use: "최종 패키징 전 칩 단위 분리",
-        eqn: "-"
-      }
-    }
-  },
   "산화 공정": {
     eng: "Oxidation",
     desc: "웨이퍼 표면에 산화막(SiO₂)을 형성하는 공정입니다.",
@@ -281,6 +271,26 @@
       }
     }
   },
+  "평탄화 공정": {
+    eng: "Planarization (CMP)",
+    desc: "불균일한 표면을 평탄하게 만드는 공정으로, 화학적/기계적 방법을 함께 사용",
+    use: "다층 배선에서 다음 공정의 정밀도를 높이기 위해 표면을 매끄럽게 함",
+    eqn: "제거율(RR) = (초기 두께 - 최종 두께) / 연마 시간",
+    subterms: {
+      "CMP": {
+        eng: "Chemical Mechanical Polishing",
+        desc: "화학적 반응과 기계적 연마를 동시에 사용하여 표면을 균일하게 만드는 공정",
+        use: "산화막 또는 절연막의 평탄화에 사용",
+        eqn: "RR = (T₀ - T) / t"
+      },
+      "슬러리": {
+        eng: "Slurry",
+        desc: "CMP 공정에서 연마제 역할을 하는 화학 용액",
+        use: "연마 패드와 함께 사용되어 표면을 정밀하게 연마함",
+        eqn: "-"
+      }
+    }
+  }
   "패키징": {
     eng: "Packaging",
     desc: "칩을 외부와 연결하고 보호하는 최종 조립 단계",
@@ -424,6 +434,18 @@
         const i = parseFloat(document.getElementById("amp").value);
         const power = v * i;
         document.getElementById("powerResult").innerText = `전력: ${power.toFixed(2)} W`;
+      }
+
+      function calcCMP() {
+        const T0 = parseFloat(document.getElementById("cmpStart").value);
+        const T = parseFloat(document.getElementById("cmpEnd").value);
+        const t = parseFloat(document.getElementById("cmpTime").value);
+        if (!isNaN(T0) && !isNaN(T) && !isNaN(t) && t !== 0) {
+          const rr = (T0 - T) / t;
+          document.getElementById("cmpResult").innerText = `CMP 제거율: ${rr.toFixed(2)} nm/min`;
+        } else {
+          document.getElementById("cmpResult").innerText = "입력값을 확인하세요.";
+        }
       }
   </script>
 </body>
